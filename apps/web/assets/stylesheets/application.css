@@ -1,0 +1,23 @@
+.abc-welcome {
+  font-weight: bold;
+}
+
+.abc-welcome small {
+  font-weight: normal;
+  font-size: 0.5em;
+  color: red;
+}
+
+.abc-form {
+  margin-top: 8%;
+}
+
+input[type=url].large-input,
+input[type=submit].large-input {
+  line-height: 2.5em;
+}
+
+.abc-form input {
+  font-family: Raleway,HelveticaNeue,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 1.1em;
+}

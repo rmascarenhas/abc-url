@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Web</title>
+    <title>ABC | Easy URL Shortening</title>
+    <%= stylesheet "application" %>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <%= favicon %>
   </head>
   <body>
-    <%= yield %>
+    <div class="container">
+      <h1 class="abc-welcome">ABC <small>Easy URL Shortening</small></h1>
+      <%= yield %>
+    </div>
   </body>
 </html>
