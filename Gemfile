@@ -11,10 +11,14 @@ group :test, :development do
   gem 'dotenv', '~> 2.0'
 end
 
-group :production do
-  gem "puma"
+group :development do
+  gem "shotgun"
 end
 
 group :test do
   gem "rspec"
+end
+
+group :production do
+  gem "puma"
 end
