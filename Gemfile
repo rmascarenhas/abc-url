@@ -6,6 +6,8 @@ gem "hanami",       "~> 0.9"
 gem "hanami-model", "~> 0.7"
 
 gem "pg"
+gem "beaneater"
+gem "faraday"
 
 group :test, :development do
   gem 'dotenv', '~> 2.0'
