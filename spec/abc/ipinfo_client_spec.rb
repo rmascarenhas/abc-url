@@ -31,4 +31,24 @@ RSpec.describe ABC::IpInfoClient do
       expect(geo.country).to eq "US"
     end
   end
+
+  context "ipinfo returns an unsuccessful status" do
+    let(:stubbed_response) { [500, {}, "Internal Server Error"] }
+
+    it "retries by raising a retryable error" do
+      expect {
+        subject.geo
+      }.to raise_exception(ABC::Worker::RetryableError)
+    end
+  end
+
+  context "ipinfo cannot be reached (network-level error)" do
+    let(:stubbed_response) { raise Faraday::ConnectionFailed.new({}) }
+
+    it "retries by raising a retryable error" do
+      expect {
+        subject.geo
+      }.to raise_exception(ABC::Worker::RetryableError)
+    end
+  end
 end

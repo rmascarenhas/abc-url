@@ -34,8 +34,7 @@ module ABC
     end
 
     def geo
-      endpoint = ["/", ip, "/geo"].join
-      response = http.get(endpoint)
+      response = fetch_ipinfo
 
       data = JSON.parse(response.body)
       Geo.new(
@@ -48,6 +47,28 @@ module ABC
     end
 
     private
+
+    # this makes the actual HTTP call to the ipinfo.io service. If the response
+    # is not successful (out of the 2XX HTTP status) or if there is an error
+    # at the network level (service is unreachable, the connection times out,
+    # etc.), an exception is raised.
+    #
+    # Work processors can then use that exception as means to retry the
+    # job later.
+    def fetch_ipinfo
+      endpoint = ["/", ip, "/geo"].join
+
+      http.get(endpoint).tap do |response|
+        retry! unless response.success?
+      end
+
+    rescue Faraday::Error
+      retry!
+    end
+
+    def retry!
+      raise ABC::Worker::RetryableError
+    end
 
     def default_connection
       Faraday.new(url: API_URL)
