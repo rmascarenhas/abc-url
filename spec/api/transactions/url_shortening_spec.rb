@@ -10,11 +10,11 @@ RSpec.describe Api::Transactions::UrlShortening do
 
   describe "#run" do
     it "uses an existing record if it exists" do
-      url           = repository.create(Url.new(href: "https://www.example.org"))
-      expected_code = ABC::Url.encode(url.id)
+      url = repository.create(Url.new(href: "https://www.example.org"))
 
       expect {
-        expect(subject.run).to eq expected_code
+        record = subject.run
+        expect(subject.run.id).to eq url.id
       }.not_to change { repository.count }
     end
 

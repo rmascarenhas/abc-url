@@ -22,8 +22,7 @@ module Api::Transactions
     end
 
     def run
-      record = existing_record || create_new_url
-      ABC::Url.encode(record.id)
+      existing_record || create_new_url
     end
 
     private
