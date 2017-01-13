@@ -4,4 +4,8 @@ class UrlRepository < Hanami::Repository
     urls.where(href: href)
   end
 
+  def count
+    urls.count
+  end
+
 end
