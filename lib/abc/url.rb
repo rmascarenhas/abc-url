@@ -22,6 +22,10 @@ module ABC
     def self.encode(key, alphabet: ALPHABET)
       UrlEncoder.new(key, alphabet).encode
     end
+
+    def self.decode(code, alphabet: ALPHABET)
+      UrlDecoder.new(code, alphabet).decode
+    end
   end
 
   # ABC::Url::UrlEncode
@@ -54,6 +58,34 @@ module ABC
       end
 
       chars.reverse
+    end
+  end
+
+  # ABC::Url::UrlDecode
+  #
+  # This class knows how to transform a a string representation in the alphabet
+  # given back into a key. In other words, it is able to reverse what is done
+  # by +ABC::Url::UrlEncode+.
+  #
+  # The operation is similar: the string given is translated back to the decimal
+  # base, iterating over each character.
+  class UrlDecoder
+    attr_reader :code, :alphabet
+
+    def initialize(code, alphabet)
+      @code     = code
+      @alphabet = alphabet
+    end
+
+    def decode
+      key = 0
+      base = alphabet.size
+
+      code.chars.each do |c|
+        key = key*base + alphabet.index(c)
+      end
+
+      key
     end
   end
 

@@ -8,7 +8,7 @@ RSpec.describe ABC::Url do
       described_class.encode(key, alphabet: alphabet)
     end
 
-    it "is able to shorten keys shorter than the alphabet base" do
+    it "is able to shorten keys shorter than the target base" do
       key = 2
       expect(encode(key)).to eq "c" # alphabet[2]
     end
@@ -18,6 +18,20 @@ RSpec.describe ABC::Url do
 
       # alphabet[5]+alphabet[2]+alphabet[3]+alphabet[0]
       expect(encode(key)).to eq "3c1a"
+    end
+  end
+
+  describe ".decode" do
+    def decode(code)
+      described_class.decode(code, alphabet: alphabet)
+    end
+
+    it "is able to decode codes from keys smaller than the target base" do
+      expect(decode("c")).to eq 2
+    end
+
+    it "is able to decode arbitrarily long codes" do
+      expect(decode("3c1a")).to eq 1170 # see calculation on `.encode` method spec
     end
   end
 end
