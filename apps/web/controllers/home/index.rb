@@ -1,6 +1,6 @@
 module Web::Controllers::Home
 
-  # Web::Controllers::Home
+  # Web::Controllers::Home::Index
   #
   # The controller for the root of the URL shortening app. No parameters are
   # expected in this endpoint.
