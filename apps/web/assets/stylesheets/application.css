@@ -21,3 +21,16 @@ input[type=submit].large-input {
   font-family: Raleway,HelveticaNeue,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 1.1em;
 }
+
+.short-link {
+  color: blue;
+  font-weight: bold;
+}
+
+.expanded-link {
+  font-size: 0.9em;
+}
+
+.url-clicks {
+  margin-top: 30px;
+}

@@ -1,0 +1,36 @@
+<h4>Your short link: <spam class="short-link"><%= short_link %></spam></h4>
+<div class="expanded-link">From the original URL <%= link_to url.href, url.href %></div>
+
+<div class="url-clicks">
+  <strong>Clicks</strong>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>IP</th>
+        <th>User Agent</th>
+        <th>Referrer</th>
+        <th>Coordinates</th>
+        <th>City</th>
+        <th>Region</th>
+        <th>Country</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% clicks.each do |click| %>
+        <tr>
+          <td><%= click.ip %></td>
+          <td><%= click.user_agent %></td>
+          <td><%= click.referer %></td>
+          <td><%= click.lat %>,<%= click.lng %></td>
+          <td><%= click.city %></td>
+          <td><%= click.region %></td>
+          <td><%= click.country %></td>
+          <td><%= click.created_at.strftime("%Y-%m-%d %H:%M %Z") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
