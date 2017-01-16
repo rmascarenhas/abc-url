@@ -47,3 +47,7 @@ input[type=submit].large-input {
   font-size: 0.8em;
   color: gray;
 }
+
+.url-error {
+  color: red;
+}
