@@ -34,3 +34,8 @@ input[type=submit].large-input {
 .url-clicks {
   margin-top: 30px;
 }
+
+.reload-countdown {
+  font-size: 0.8em;
+  color: gray;
+}
