@@ -38,7 +38,7 @@ RSpec.describe ABC::IpInfoClient do
     it "retries by raising a retryable error" do
       expect {
         subject.geo
-      }.to raise_exception(ABC::Worker::RetryableError)
+      }.to raise_exception(ABC::IpInfoClient::NetworkFailure)
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe ABC::IpInfoClient do
     it "retries by raising a retryable error" do
       expect {
         subject.geo
-      }.to raise_exception(ABC::Worker::RetryableError)
+      }.to raise_exception(ABC::IpInfoClient::NetworkFailure)
     end
   end
 end

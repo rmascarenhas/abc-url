@@ -11,6 +11,11 @@ module ABC
   # are irrelevant for this application.
   class IpInfoClient
 
+    # This error indicates that a failure happened when trying to invoke the
+    # ipinfo.io service in order to get IP information.
+    class NetworkFailure < RuntimeError
+    end
+
     # ABC::IpInforClient::Geo
     #
     # Contains the parsed data from the response of the ipinfo.io service.
@@ -51,23 +56,20 @@ module ABC
     # this makes the actual HTTP call to the ipinfo.io service. If the response
     # is not successful (out of the 2XX HTTP status) or if there is an error
     # at the network level (service is unreachable, the connection times out,
-    # etc.), an exception is raised.
-    #
-    # Work processors can then use that exception as means to retry the
-    # job later.
+    # etc.), an exception is raised (+ABC::IpInfoClient::NetworkError+).
     def fetch_ipinfo
       endpoint = ["/", ip, "/geo"].join
 
       http.get(endpoint).tap do |response|
-        retry! unless response.success?
+        failure! unless response.success?
       end
 
     rescue Faraday::Error
-      retry!
+      failure!
     end
 
-    def retry!
-      raise ABC::Worker::RetryableError
+    def failure!
+      raise NetworkFailure
     end
 
     def default_connection
