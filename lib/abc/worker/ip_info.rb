@@ -13,14 +13,14 @@ class ABC::Worker
   class IpInfo
 
     def process(args, client: nil)
-      client ||= ABC::IpInfoClient.new(args[:ip])
+      client ||= ABC::IpInfoClient.new(args["ip"])
       geo = client.geo
 
       click = Click.new(
-        url_id:     args[:url_id],
-        ip:         args[:ip],
-        user_agent: args[:user_agent],
-        referer:    args[:referer],
+        url_id:     args["url_id"],
+        ip:         args["ip"],
+        user_agent: args["user_agent"],
+        referer:    args["referer"],
         lat:        geo.lat,
         lng:        geo.lng,
         city:       geo.city,

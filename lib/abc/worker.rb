@@ -37,10 +37,17 @@ module ABC
     class RetryableError < RuntimeError
     end
 
+    attr_reader :logger
+
+    def initialize
+      path = Hanami.root.join("log", "worker.log").to_s
+      @logger = Logger.new(path)
+    end
+
     def start!
       JOBS.each do |tube, processor|
         client.jobs.register(tube, retry_on: [RetryableError]) do |job|
-          processor.process(job.body)
+          process!(processor, job)
         end
       end
 
@@ -52,6 +59,14 @@ module ABC
     end
 
     private
+
+    def process!(processor, job)
+      logger.info("Processing #{job.body}")
+      processor.process(job.body)
+    rescue => err
+      data = [err.message, err.backtrace.join("\n")].join("\n")
+      logger.error(data)
+    end
 
     def client
       self.class.client
