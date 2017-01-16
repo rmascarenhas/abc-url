@@ -4,10 +4,10 @@ RSpec.describe ABC::Worker::IpInfo do
   let(:url) { UrlRepository.new.create(Url.new(href: "https://www.example.org")) }
   let(:args) {
     {
-      url_id:     url.id,
-      ip:         "1.2.3.4",
-      user_agent: "Mozilla",
-      referer:    "www.google.com"
+      "url_id"     => url.id,
+      "ip"         => "1.2.3.4",
+      "user_agent" => "Mozilla",
+      "referer"    =>"www.google.com"
     }
   }
   let(:client) { ABC::IpInfoClient.new("1.2.3.4") }
