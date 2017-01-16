@@ -29,11 +29,29 @@ module Web::Controllers::Url
       # However, that is a best practice since the content of the destination
       # URL is attributed to the expanded URL, which is good for SEO reasons.
       if url
+        enqueue_click_analysis(url)
         redirect_to url.href, status: 301
       else
         self.status = 404
         self.body   = "Not Found"
       end
+    end
+
+    private
+
+    # enqueues a new job for the Beanstalk job processor. This includes the caller's
+    # request information. With the provided IP, the processor can query location
+    # information, and save that to the +clicks+ table.
+    def enqueue_click_analysis(url)
+      worker = ABC::Worker.new
+      args   = {
+        url_id:     url.id,
+        ip:         request.ip,
+        user_agent: request.user_agent,
+        referer:    request.referer
+      }
+
+      worker.enqueue(ENV["BEANSTALK_IPINFO_TUBE"], args)
     end
 
   end
