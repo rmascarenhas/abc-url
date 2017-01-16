@@ -34,15 +34,17 @@ $(document).ready(function() {
 
   // sets in a loop running every 1s until the number of remaining seconds
   // reaches 0, in which case the page is reloaded.
-  (function countdown() {
-    setCountdownMessage(seconds);
+  if (countdownEl.length > 0) {
+    (function countdown() {
+      setCountdownMessage(seconds);
 
-    if (seconds === 0) {
-      return window.location.reload();
-    }
+      if (seconds === 0) {
+        return window.location.reload();
+      }
 
-    seconds = seconds - 1;
+      seconds = seconds - 1;
 
-    window.setTimeout(countdown, 1000);
-  })();
+      window.setTimeout(countdown, 1000);
+    })();
+  }
 });
