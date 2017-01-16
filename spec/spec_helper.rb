@@ -1,8 +1,10 @@
 ENV["HANAMI_ENV"] ||= "test"
 
 require_relative "../config/environment"
-
 Hanami.boot
+
+# load every file under +spec/support+
+Dir[__dir__ + '/support/**/*.rb'].sort.each { |f| require f }
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
