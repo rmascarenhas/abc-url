@@ -1,3 +1,11 @@
+.logo-link,
+.logo-link:hover,
+.logo-link:visited,
+.logo-link:active {
+  color: black;
+  text-decoration: none;
+}
+
 .abc-welcome {
   font-weight: bold;
 }

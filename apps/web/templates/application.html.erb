@@ -9,7 +9,9 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="abc-welcome">ABC <small>Easy URL Shortening</small></h1>
+      <h1 class="abc-welcome">
+        <%= link_to "ABC", routes.root_path, class: "logo-link" %> <small>Easy URL Shortening</small>
+      </h1>
       <%= yield %>
     </div>
 

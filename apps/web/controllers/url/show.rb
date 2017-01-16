@@ -17,8 +17,9 @@ module Web::Controllers::Url
     end
 
     def call(params)
-      if params.valid?
-        @url    = urls_repo.find(params[:id])
+      @url = params.valid? && urls_repo.find(params[:id])
+
+      if @url
         @clicks = clicks_repo.for_url(url)
         @code   = ABC::Url.encode(url.id)
       else
