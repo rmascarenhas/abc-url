@@ -1,8 +1,11 @@
 require "spec_helper"
 
 RSpec.describe Api::Transactions::UrlShortening do
+  let(:raw_params) {
+    { "url" => "https://www.example.org" }
+  }
   let(:params) {
-    Hanami::Action::BaseParams.new("url" => "https://www.example.org")
+    Hanami::Action::BaseParams.new(raw_params)
   }
   let(:repository) { UrlRepository.new }
 
@@ -19,9 +22,28 @@ RSpec.describe Api::Transactions::UrlShortening do
     end
 
     it "creates a new URL and uses that to generate a URL code if no record exists" do
+      url = nil
+
       expect {
-        subject.run
+        url = subject.run
       }.to change { repository.count }.by(1)
+
+      expect(url.href).to eq "https://www.example.org"
+    end
+
+    it "prepends `http://` if not given" do
+      raw_params["url"] = "www.example.org"
+
+      url = subject.run
+      expect(url.href).to eq "http://www.example.org"
+    end
+
+    it "returns an existing record if the `http://` prefix is missing" do
+      existing = repository.create(Url.new(href: "http://www.example.org"))
+      raw_params["url"] = "www.example.org"
+
+      url = subject.run
+      expect(url.id).to eq existing.id
     end
   end
 end

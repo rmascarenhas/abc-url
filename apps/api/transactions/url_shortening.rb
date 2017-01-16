@@ -28,12 +28,24 @@ module Api::Transactions
     private
 
     def existing_record
-      repository.with_href(url).first
+      repository.with_href(normalized_url).first
     end
 
     def create_new_url
-      entity = Url.new(href: url)
+      entity = Url.new(href: normalized_url)
       repository.create(entity)
+    end
+
+    # if the incoming URL does is not prefixed with either +http://+ or +https://+,
+    # assume HTTP and add it to the URL. This way, if subsequent shortening calls
+    # to the same URL are made in the future, the API will not create two different
+    # links.
+    def normalized_url
+      if url =~ %r{^https?://}
+        url
+      else
+        ["http://", url].join
+      end
     end
   end
 
